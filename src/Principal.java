@@ -29,7 +29,7 @@ public class Principal {
             System.out.println("10. Convertir de Euro (EUR) a Dólar (USD)");
             System.out.println("0. Salir");
             System.out.print("Ingrese el número de la opción: ");
-            System.out.println("Revise la forma abreviada de las monedas a convertir");
+
 
             if (scanner.hasNextInt()) {
                 int choice = scanner.nextInt();
