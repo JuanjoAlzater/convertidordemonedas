@@ -4,11 +4,15 @@ public class Principal {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        ConsultaApi consultaApi = new ConsultaApi();
-        ConversorDeMonedas conversor = new ConversorDeMonedas(consultaApi);
-        boolean running = true;
+
 
         System.out.println("\n¡Bienvenido al Conversor de Monedas!");
+        System.out.println("Porfavor ingrese su APIKEY: ");
+        String apikey = scanner.nextLine();
+
+        ConsultaApi consultaApi = new ConsultaApi(apikey);
+        ConversorDeMonedas conversor = new ConversorDeMonedas(consultaApi);
+        boolean running = true;
 
         while (running) {
             System.out.println("\n--- Conversor de Moneda ---");
@@ -25,11 +29,11 @@ public class Principal {
             System.out.println("10. Convertir de Euro (EUR) a Dólar (USD)");
             System.out.println("0. Salir");
             System.out.print("Ingrese el número de la opción: ");
+            System.out.println("Revise la forma abreviada de las monedas a convertir");
 
             if (scanner.hasNextInt()) {
                 int choice = scanner.nextInt();
-                scanner.nextLine(); // Consume newline
-
+                scanner.nextLine();
                 String fromCurrency = "";
                 String toCurrency = "";
 
@@ -80,7 +84,7 @@ public class Principal {
                         break;
                     default:
                         System.out.println("Opción no válida. Por favor, ingrese un número del 0 al 10.");
-                        continue; // Skip to the next iteration
+                        continue;
                 }
 
                 if (!fromCurrency.isEmpty() && !toCurrency.isEmpty()) {
@@ -98,14 +102,14 @@ public class Principal {
         System.out.print("Ingrese la cantidad a convertir de " + fromCurrency + ": ");
         if (scanner.hasNextDouble()) {
             double amount = scanner.nextDouble();
-            scanner.nextLine(); // Consume newline
+            scanner.nextLine();
             double convertedAmount = conversor.convertCurrency(amount, fromCurrency, toCurrency);
             if (convertedAmount != -1) {
                 System.out.println(amount + " " + fromCurrency + " son equivalentes a " + String.format("%.2f", convertedAmount) + " " + toCurrency);
             }
         } else {
             System.out.println("Cantidad no válida. Por favor, ingrese un número.");
-            scanner.nextLine(); // Consume invalid input
+            scanner.nextLine();
         }
     }
 }

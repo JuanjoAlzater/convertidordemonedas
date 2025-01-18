@@ -8,14 +8,17 @@ import java.net.URL;
 public class ConsultaApi {
 
     private static final String API_BASE_URL = "https://v6.exchangerate-api.com/v6/";
-    private static final String API_KEY = "675424c6e492ffadc9acb2e5";
-
+    private final String apiKey;
     private final Gson gson = new Gson();
+
+    public ConsultaApi(String apiKey) {
+        this.apiKey = apiKey;
+    }
 
     public Double fetchExchangeRate(String fromCurrency, String toCurrency) {
         try {
-            // Construct the URL for the specific currency pair
-            String apiUrl = API_BASE_URL+API_KEY+"/pair/"+ fromCurrency+"/"+toCurrency;
+
+            String apiUrl = API_BASE_URL + apiKey + "/pair/" + fromCurrency + "/" + toCurrency;
             URL url = new URL(apiUrl);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
@@ -30,7 +33,7 @@ public class ConsultaApi {
                 }
                 reader.close();
 
-                // Parse the JSON response using Gson
+
                 ExchangeRateResponse responseData = gson.fromJson(response.toString(), ExchangeRateResponse.class);
                 if (responseData.getResult().equals("success")) {
                     return responseData.getConversionRate();
@@ -50,7 +53,7 @@ public class ConsultaApi {
         }
     }
 
-    // Helper class to represent the structure of the JSON response for a pair
+
     private static class ExchangeRateResponse {
         private String result;
         private String error_type;
